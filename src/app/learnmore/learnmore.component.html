@@ -1,0 +1,84 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Learn More</h2>
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>A new level of Authentication for your Website</h3>
+                <p style="text-align: justify;">If you got a web-site, chances are that sooner or later you are going to need an authentication system for
+                    your users. KeyGuard will give you the possibility of enabling a continuous authentication system based
+                    on keystroke dynamics and in this way you are sure that your users are safe.</p>
+            </div>
+            <div class="col-lg-4" align="center">
+                <img src="././assets/img/learn-more_1.png" style="width:100%;height:auto;max-width:240px;">
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-4" align="center">
+                <img src="././assets/img/learn-more_2.jpg" style="width:100%;height:auto;max-width:300px;">
+            </div>
+            <div class="col-lg-8">
+                <h3>Why Keystroke Dynamics?</h3>
+                <p style="text-align: justify;">There are several types of authentication; authenticate by what you have, what you are (or how you behave),
+                    what you know etc (more here). The problem with what you have or what you know is that someone else also
+                    may know it, or may have it. On the other hand, what you are or how you behave is at most times very
+                    unique and very hard to copy (or steal of course). So, studies have been conducted and have shown that
+                    a keyboard typing pattern of a person (like hand signature) is very unique, and can be used in a behavioral
+                    authentication system.</p>
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>We send you a logging RxJs script with the latest technology</h3>
+                <p style="text-align: justify;">The logging script is written in RxJs and will rest on top of your web-site in order to accurately track
+                    your users' actions.</p>
+                <h3>Track from your website with your unique code</h3>
+                <p style="text-align: justify;">When you create your account, we will generate automatically for you a unique track-code that you can use
+                    in your web-site in order for the script to send the keystroke data to our server.</p>
+            </div>
+            <div class="col-lg-4" align="center">
+                <br>
+                <br>
+                <br>
+                <img src="././assets/img/learn-more_3.png" style="width:100%;height:auto;max-width:240px;">
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-4" align="center">
+                <img src="././assets/img/meanstacklogo.jpg" style="width:100%;height:auto;max-width:300px;">
+            </div>
+            <div class="col-lg-8">
+                <h3>Have access to your users' logs from our server</h3>
+                <p style="text-align: justify;">You can use our friendly interface in order to access the data that is coming from your website and also
+                    watch a lot of other stuff.</p>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<br>
+<br>
+<div *ngIf="!authService.isUserLoggedIn()" align="center">
+    <h2>Get started now by creating a free account!</h2>
+    <br>
+    <a class="btn btn-primary btn-lg" [routerLink]="['/register']">Create Account</a>
+</div>
+
+<!-- Contrary to a static authentication system, where the authentication works only at the login phase and stops when the user succesfuly gets the access, in a continuous authentication system the authentication continues after the log-in phase by monitoring -->

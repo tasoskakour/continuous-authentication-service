@@ -1,0 +1,26 @@
+<br>
+
+<div class="panel panel-primary my-border-radius">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                <h2 class="name">{{currentUser.firstname}} {{currentUser.lastname}}</h2>
+                <h3 class="username">
+                    <span class="username">Username: </span>{{currentUser.username}}</h3>
+                <h3 class="username">
+                    <span class="username">Date Registered: </span>{{currentUser.date}}</h3>
+                <h3 class="username">
+                    <span class="username">Projects Created: </span>{{currentUser.projects.length}}</h3>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <img src="../assets/img/dashboard/man-with-tie.png" class="profile-img">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<a routerLink="/projects">
+    <h1 class="my-projects">My projects</h1>
+</a>

@@ -1,0 +1,265 @@
+/* Jumbotron */
+
+h2.main-heading {
+    font-size: 45px;
+    text-align: center;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+h3.sub-heading,
+input.sub-heading {
+    font-size: 40px;
+    text-align: center;
+}
+
+h4.sub-heading {
+    font-size: 25px;
+    text-align: center;
+    font-style: italic;
+}
+
+.edit-siteurl {
+    vertical-align: middle;
+    font-size: 17px;
+    color: black;
+    cursor: pointer;
+}
+
+
+/* input.edit-url {
+    width: 70%;
+} */
+
+
+/** GENERAL STATISTICS **********/
+
+img.gen-stat-img {
+    width: 36px;
+    height: auto;
+}
+
+h4.gen-stat-head {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-top: 1px;
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+h4.gen-stat-num {
+    font-size: 25px;
+    font-family: 'Exo 2', sans-serif;
+}
+
+h3.gen-stat-head {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-top: 3px;
+    margin-top: 7px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+h3.gen-stat-num {
+    font-size: 30px;
+    font-family: 'Exo 2', sans-serif;
+    margin-top: 0px;
+    padding-top: 9px;
+}
+
+h3.off {
+    font-style: bold;
+    color: red;
+}
+
+h3.on {
+    font-style: bold;
+    color: #21B921;
+}
+
+p.text-muted.auth-off {
+    color: #494949;
+    font-weight: bold;
+    margin-top: -6px;
+    font-style: italic;
+}
+
+img.gen-stat-img-big {
+    width: 65px;
+    height: 65px;
+}
+
+
+/* ***************************TRAINNGGGG******************************* */
+
+h4.no-training {
+    font-size: 18px;
+    color: #D64106;
+}
+
+p.no-training {
+    font-size: 15px;
+    color: black;
+}
+
+span.latest-trained {
+    font-weight: bold;
+}
+
+p.retrain {
+    color: #5C5C5C;
+    font-style: italic;
+    font-size: 15px;
+}
+
+p.all-trained {
+    /* color: #242DA5; */
+    /* font-style: italic; */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+p.not-all-trained {
+    color: rgb(253, 56, 56);
+    /* font-style: italic; */
+    font-size: 18px;
+}
+
+#training,
+#settings {
+    /* height: 230px; */
+    min-height: 550px;
+}
+
+
+/***************************** SETTINGSSSSSSSSSSSSSs **********************************/
+
+.settings-container {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.text-explanation {
+    color: #575757;
+    font-size: 15px;
+    font-style: italic;
+    text-align: left !important;
+}
+
+.keystroke-collect-period-select {
+    margin-top: 0px;
+}
+
+h4.settings-head {
+    font-weight: bold;
+}
+
+select.bg-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+select.bg-default {
+    background-color: #95a5a6;
+    color: white;
+}
+
+select.styled-select {
+    overflow: hidden;
+    /* width: 55px; */
+    height: auto;
+    border-radius: 12px;
+    padding: 2px 17px 2px 17px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+label.n-components {
+    font-size: 17px;
+    padding-right: 5px;
+}
+
+button.train-btn {
+    margin-top: 10px;
+}
+
+
+/* Table */
+
+table#userStats th,
+td.al-center {
+    text-align: center;
+}
+
+table#userStats td.user-stat {
+    font-size: 18px;
+}
+
+button.btn.btn-info.btn-sm.smaller-padding {
+    text-decoration: underline;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.icon-delete-user-stat {
+    width: 18px;
+    height: auto;
+}
+
+.icon-user-stat {
+    height: 21px;
+    width: 20px;
+}
+
+
+/* Misc */
+
+.disabled-state {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+/* */
+
+span.subject-name {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    background-color: #000000a1;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: -17px;
+    font-size: 11px;
+}
+
+
+/*Training Algorithm*/
+
+label.choose-train-algorithm {
+    font-size: 17px;
+}
+
+label.training-algorithm {
+    font-size: 17px;
+}
+
+h4.define-train-params {
+    font-weight: bold;
+}
+
+
+/*Override bootstrap*/
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: #eaeaff !important;
+}
+
+.table-striped tbody tr:nth-of-type(2n) {
+    background-color: white !important;
+}

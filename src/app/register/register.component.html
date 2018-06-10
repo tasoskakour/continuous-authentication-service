@@ -1,0 +1,53 @@
+<!-- <div class="container"> -->
+<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+    <fieldset>
+        <legend>
+            <div align="center">
+                <h2>Sign up to KeyGuard</h2>
+            </div>
+        </legend>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="username" class="col-lg-4 control-label">First Name</label>
+            <div class="col-lg-4">
+                <input type="text" placeholder="First Name" class="form-control" name="firstname" [(ngModel)]="model.firstname" #firstname="ngModel" required />
+                <div *ngIf="f.submitted && !firstname.valid" class="help-block">First Name is required</div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="lastname" class="col-lg-4 control-label">Last Name</label>
+            <div class="col-lg-4">
+                <input class="form-control" placeholder="Last Name" name="lastname" [(ngModel)]="model.lastname" #lastname="ngModel" required>
+                <div *ngIf="f.submitted && !lastname.valid" class="help-block">Last Name is required</div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="username" class="col-lg-4 control-label">Username</label>
+            <div class="col-lg-4">
+                <input class="form-control" placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
+                <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+            <label for="password" class="col-lg-4 control-label">Password</label>
+            <div class="col-lg-4">
+                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group" align="center">
+            <div class="col-lg-12">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button [disabled]="loading" type="submit" class="btn btn-primary" id="btnregister">Sign up</button>
+                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                />
+                <h6>Already have an account? <a class="nav-link" routerLink="/login">Sign In</a>.</h6>
+            </div>
+        </div>
+
+    </fieldset>
+
+</form>
+<!-- </div> -->

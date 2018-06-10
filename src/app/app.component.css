@@ -1,0 +1,16 @@
+  #mywrapper {
+      min-height: 100%;
+      position: relative;
+  }
+  
+  .container {
+      padding-bottom: 200px;
+  }
+  
+  #mywell {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin-bottom: 0px;
+  }

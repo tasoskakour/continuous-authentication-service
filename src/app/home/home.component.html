@@ -1,0 +1,52 @@
+<div class="jumbotron text-center">
+    <logo></logo>
+    <h1>KeyGuard</h1>
+    <p class="lead">A new level of authentication for your website.</p>
+    <div *ngIf="!authService.isUserLoggedIn()">
+        <a class="btn btn-primary" [routerLink]="['/register']">Register</a> <a class="btn btn-default" [routerLink]="['/login']">Login</a>
+    </div>
+    <div *ngIf="authService.isUserLoggedIn()">
+        <a class="btn btn-default" [routerLink]="['/myprofile']">Profile</a> <a class="btn btn-primary" [routerLink]="['/projects']">Projects</a>
+    </div>
+</div>
+
+<div class="container" align="center">
+    <h2>Get started by following the steps below</h2>
+</div>
+
+<br><br><br>
+
+
+<div class="row">
+    <div class="col-lg-3">
+        <div align="center"><img src="././assets/img/home/documentation.png" style="width:90px;height:auto">
+            <h3>Read Documentation</h3>
+        </div>
+        <p>We strongly advise you, to carefully read the <a [routerLink]="['/learn-more']">Learn-More</a> section in order to understand what keystroke dynamics mean and how KeyGuard works.</p>
+    </div>
+    <div class="col-lg-3">
+        <div align="center"><img src="././assets/img/home/user.png" style="width:90px;height:auto">
+            <h3>Create a Free Account</h3>
+        </div>
+        <p>You will need to create a free account in order to to enable keystroke dynamics for your website, by clicking <a [routerLink]="['/register']">here</a>.</p>
+    </div>
+    <div class="col-lg-3">
+        <div align="center"><img src="././assets/img/home/track_code.png" style="width:90px;height:auto">
+            <h3>Get Your Track-Code</h3>
+        </div>
+        <p>We will generate a unique track-code for you, that you can use to log keystroke data from your web-site.</p>
+    </div>
+    <div class="col-lg-3">
+        <div align="center"><img src="././assets/img/home/script.png" style="width:90px;height:auto">
+            <h3>Load the Logging Script</h3>
+        </div>
+        <p>Just load the logging script to your index.html of your website, according to documentation, in order to start your keyguard protection!</p>
+    </div>
+</div>
+
+<br><br><br>
+
+<div align="center">
+    <a *ngIf="!authService.isUserLoggedIn()" class="btn btn-primary" [routerLink]="['/register']">Create Account</a>
+    <a class="btn btn-info" [routerLink]="['/learn-more']">Learn More</a>
+</div>

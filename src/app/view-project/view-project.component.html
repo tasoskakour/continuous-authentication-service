@@ -1,0 +1,478 @@
+<div class="jumbotron" *ngIf="this.currentProject !== undefined">
+    <h2 class="main-heading">Project Dashboard</h2>
+    <!-- If user hasnt pressed edit site url -->
+    <h3 *ngIf="!activateSiteURLInputFlag" class="sub-heading">{{currentProject.siteurl}}
+        <i class="fa fa-pencil edit-siteurl" aria-hidden="true" (click)="this.activateSiteURLInputFlag = true;this.currentProjectSiteURL_backup = this.currentProject.siteurl;"></i>
+    </h3>
+    <!-- If user has pressed edit site url -->
+    <div *ngIf="activateSiteURLInputFlag" style="margin-top:30px;text-align:center;">
+        <input class="form-control sub-heading" style="height:50%;" [disabled]="projectChangingFlag" [(ngModel)]="currentProject.siteurl">
+        <i [ngClass]="{'fa': true, 'fa-floppy-o': true, 'disabled-state': projectChangingFlag}" aria-hidden="true" style="margin-top:15px;cursor:pointer;font-size:25px;color:#2c3e50;"
+            (click)="changeProjectSettings()"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <i [ngClass]="{'fa': true, 'fa-times': true, 'disabled-state': projectChangingFlag}" aria-hidden="true" style="cursor:pointer;font-size:25px;color:red;"
+            (click)="this.activateSiteURLInputFlag = false; this.currentProject.siteurl = this.currentProjectSiteURL_backup"></i>
+    </div>
+
+    <h4 *ngIf="!activateSiteURLInputFlag" class="sub-heading">{{currentProject.track_code}}</h4>
+</div>
+
+<!-- If current Project is loading -->
+<div class="jumbotron" *ngIf="this.currentProject == undefined">
+    <h2 class="main-heading">Project Dashboard</h2>
+    <div align="center">
+        <img src="assets/img/loading_dots.gif" style="width:200px;height:auto;">
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+
+<!-- If the dashboard loads -->
+<div align="center" *ngIf="dashboardLoadingFlag">
+    <img src="assets/img/loading.gif" style="width:150px;height:auto;">
+</div>
+
+
+<!-- If the dashboard has stopped loading but no subjects -->
+<div align="center" *ngIf="!dashboardLoadingFlag && noSubjectsFlag">
+    <img src="../assets/img/dashboard/such_empty.png" style="width:15%;height:auto;">
+    <br>
+    <h4 style="font-style:italic;">Wow, such empty...</h4>
+    <br>
+</div>
+
+
+<!-- Continue only if -->
+<div *ngIf="!dashboardLoadingFlag && !noSubjectsFlag">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>General Statistics</h4>
+                </div>
+                <div *ngIf="!(dashboardLoadingFlag || this.ProjectSummary == undefined)" class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" align="center">
+                            <div class="gen-stat-container">
+                                <img src="assets/img/dashboard/users.png" class="gen-stat-img" alt="">
+                                <h4 class="gen-stat-head">Total Users</h4>
+                                <h4 *ngIf="ProjectSummary.totalUsers !== undefined" class="gen-stat-num">{{ProjectSummary.totalUsers.toLocaleString() || 0}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" align="center">
+                            <div class="gen-stat-container">
+                                <img src="assets/img/dashboard/keystrokes.png" class="gen-stat-img" alt="">
+                                <h4 class="gen-stat-head">Total Keystrokes</h4>
+                                <h4 *ngIf="ProjectSummary.totalKeystrokes !== undefined" class="gen-stat-num">{{ProjectSummary.totalKeystrokes.toLocaleString()}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" align="center">
+                            <div class="gen-stat-container">
+                                <img src="assets/img/dashboard/latest_session.png" class="gen-stat-img" alt="">
+                                <h4 class="gen-stat-head">Latest Keystroke On</h4>
+                                <h4 *ngIf="ProjectSummary.lastKeystrokeDate !== undefined" class="gen-stat-num">{{this.formatMyDate(ProjectSummary.lastKeystrokeDate) }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:15px;">
+                        <!-- If auth is not enabled -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center" *ngIf="!currentProject.enable_keyguard_auth_flag">
+                            <img src="assets/img/dashboard/keyguard_on_off.png" width="65" height="65" class="d-inline-block align-top" alt="">
+                            <h3 class="gen-stat-head">Keyguard Authentication</h3>
+                            <h3 class="gen-stat-num off">OFF</h3>
+                            <p class="text-muted auth-off">You are strongly advised to enable it!</p>
+                        </div>
+                        <!-- If auth is  enabled -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center" *ngIf="currentProject.enable_keyguard_auth_flag">
+                            <img src="assets/img/dashboard/keyguard_on_off.png" width="65" height="65" class="d-inline-block align-top" alt="">
+                            <h3 class="gen-stat-head">Keyguard Authentication</h3>
+                            <h3 class="gen-stat-num on">ON</h3>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center">
+                            <img src="assets/img/dashboard/rejections.png" class="gen-stat-img-big">
+                            <h3 class="gen-stat-head">Total Rejections</h3>
+                            <h3 *ngIf="ProjectSummary.totalRejections !== undefined" class="gen-stat-num">{{ProjectSummary.totalRejections}}</h3>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--Training and Project Settings below here  -->
+
+    <div class="row">
+
+        <!-- 
+            Training Settings Here
+            Dependand upon SubjectsSummary and currentProject
+         -->
+        <div class="col-lg-7">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>Model Training</h4>
+                </div>
+
+                <!-- Subjects not empty -->
+                <div class="panel-body" *ngIf="!dashboardLoadingFlag && SubjectsSummary.length != 0" id="training">
+                    <div class="training-container" *ngIf="this.SubjectsSummary !== undefined && this.currentProject !== undefined">
+
+                        <!-- If user hasn't even trained yet -->
+                        <div *ngIf="currentProject.last_train_date == ''">
+                            <h4 class="no-training">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;It appears that you have not trained your data!</h4>
+                            <p class="no-training">You are advised to train your data now!</p>
+                        </div>
+
+                        <!-- If user has trained -->
+                        <div *ngIf="currentProject.last_train_date !== '' && currentProject.last_train_date !== undefined">
+                            <h4 class="latest-trained">
+                                <i class="fa fa-check" aria-hidden="true"></i>&nbsp;You recently trained your data on:
+                                <span class="latest-trained">{{this.formatMyDate(currentProject.last_train_date)}}</span>
+                            </h4>
+                            <!-- If all subjects are trained -->
+                            <div *ngIf="untrained == 0">
+                                <p class="all-trained">
+                                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;All your users are successfully trained.</p>
+                                <p class="retrain">
+                                    <i class="fa fa-comment-o fa-flip-horizontal" aria-hidden="true"></i>&nbsp;You can re-train your data by clicking below.</p>
+                                <br>
+                            </div>
+                            <!-- If some subjects are not trained -->
+                            <div *ngIf="untrained != 0">
+                                <p class="not-all-trained">
+                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                    <strong>{{untrained}}</strong> out of
+                                    <strong>{{SubjectsSummary.length}}</strong> users are not trained! </p>
+                                <p class="retrain">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;You are advised to completely re-train your data.</p>
+                                <br>
+                            </div>
+                        </div>
+
+                        <br>
+                        <!-- Training Algorithm -->
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-lg-6 control-label choose-train-algorithm">Choose Training Algorithm:</label>
+                                    <div class="col-lg-6">
+                                        <div class="radio">
+                                            <label class="training-algorithm">
+                                                <input name="optionsRadios" id="optionsRadios1" value="ONE_CLASS_SVM" type="radio" [(ngModel)]="currentProject.training_algorithm"> One Class SVM</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="training-algorithm">
+                                                <input name="optionsRadios" id="optionsRadios2" value="GMM" type="radio" [(ngModel)]="currentProject.training_algorithm"> Gaussian Mixture Model</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <hr>
+                        <!-- Training Parameters -->
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+
+                                    <!-- FOR GMM -->
+                                    <div class="row" *ngIf="this.currentProject.training_algorithm=='GMM'">
+                                        <label class="col-lg-4 control-label choose-train-algorithm">Algorithm Parameters:</label>
+                                        <div class="col-lg-8">
+                                            <table style="width:98%">
+                                                <tr>
+                                                    <td style="width:15%;text-align:center;"># GMM Components</td>
+                                                    <td style="width:30%; text-align:center">
+                                                        <select class="bg-primary styled-select" [(ngModel)]="currentProject.training_params.GMM.n_components" name="GMMnComponents">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:15%">Delta</td>
+                                                    <td style="width:40%">
+                                                        <nouislider [min]="0.5" [max]="2.5" [step]="0.1" [tooltips]="[  true ]" [(ngModel)]="currentProject.training_params.GMM.delta"
+                                                            [disabled]="dashboardLoadingFlag" name="GMMdelta"></nouislider>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!--  FOR SVM -->
+                                    <div class="row" *ngIf="this.currentProject.training_algorithm=='ONE_CLASS_SVM'">
+                                        <label class="col-lg-4 control-label choose-train-algorithm">Algorithm Parameters:</label>
+                                        <div class="col-lg-8">
+                                            <table style="width:95%">
+                                                <tr>
+                                                    <td style="width:50%;text-align:center">RBF Kernel Gamma</td>
+                                                    <td style="width:50%">
+                                                        <nouislider [min]="0.06" [max]="1" [step]="0.02" [tooltips]="[  true ]" [(ngModel)]="currentProject.training_params.ONE_CLASS_SVM.gamma"
+                                                            [disabled]="dashboardLoadingFlag" name="SVMgamma"></nouislider>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <hr>
+                        <!-- Timing Limits -->
+                        <div class="row">
+                            <!--  For Key Hold -->
+                            <div class="col-lg-6">
+                                <nouislider [connect]="true" [min]="0" [max]="500" [step]="5" [tooltips]="[true, true]" [(ngModel)]="timingLimits.keyHold"
+                                    name="timinglimitshold"></nouislider>
+                                <br>
+                                <label class="n-components">
+                                    <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="bottom" data-toggle="tooltip" [attr.data-original-title]="tooltips.timings_key_hold_range"></i>&nbsp;Key Hold Dt Range (ms)</label>
+                            </div>
+
+                            <!-- For Digraph Up Down -->
+                            <div class="col-lg-6">
+                                <nouislider [connect]="true" [min]="-400" [max]="1000" [step]="1" [tooltips]="[true, true]" [(ngModel)]="timingLimits.digraphUpDown"
+                                    name="timinglimitsdiupdown"></nouislider>
+                                <br>
+                                <label class="n-components">
+                                    <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="bottom" data-toggle="tooltip" [attr.data-original-title]="tooltips.timings_di_up_down_range"></i>&nbsp;Digraph Up-Down Dt Range (ms)</label>
+                            </div>
+                        </div>
+
+                        <!--  Train Button -->
+                        <div align="center" *ngIf="currentProject.last_train_date == ''">
+                            <button [disabled]="trainLoadingFlag" class="btn btn-info train-btn" (click)="train()">Train Model</button>
+                            <img *ngIf="trainLoadingFlag" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                        </div>
+
+                        <!-- Re-Train Button -->
+                        <div align="center" *ngIf="currentProject.last_train_date !== '' && currentProject.last_train_date !== undefined">
+                            <button [disabled]="trainLoadingFlag" class="btn btn-info train-btn" (click)="train()">Re-Train Model</button>
+                            <img *ngIf="trainLoadingFlag" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 
+            Project Settings Here
+            Dependand Upon currentProject
+            .enable_keyguard_auth_flag
+            .testing_threshold
+        -->
+        <div class="col-lg-5" id="settings">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>Settings</h4>
+                </div>
+                <div class="panel-body" id="settings">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="settings-container" *ngIf="this.currentProject !== undefined">
+                                <table style="width:100%;">
+                                    <tr *ngIf="currentProject.enable_keyguard_auth_flag">
+                                        <td>
+                                            <h4 class="settings-head">Disable Keyguard Authentication &nbsp; &nbsp;</h4>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning" [disabled]="projectChangingFlag || dashboardLoadingFlag" (click)="toggleKeyguardAuthFlag();changeProjectSettings()">Disable Now</button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!currentProject.enable_keyguard_auth_flag">
+                                        <td>
+                                            <h4 class="settings-head">Enable Keyguard Authentication:</h4>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" [disabled]="projectChangingFlag || dashboardLoadingFlag" (click)="toggleKeyguardAuthFlag();changeProjectSettings()">Enable Now</button>
+                                        </td>
+                                    </tr>
+
+                                    <br>
+                                    <br>
+                                    <br>
+
+                                    <tr>
+                                        <td>
+                                            <h4 class="settings-head">
+                                                <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="top" data-toggle="tooltip" [attr.data-original-title]="tooltips.authentication_threshold"></i>&nbsp;Set Authentication Threshold:</h4>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="!dashboardLoadingFlag && currentProject.testing_threshold !== undefined">
+                                                <nouislider [min]="0.2" [max]="0.7" [step]="0.01" [tooltips]="[  true ]" [(ngModel)]="currentProject.testing_threshold" (ngModelChange)="this.onProjectSettingsChangeFlag = true;"
+                                                    [disabled]="dashboardLoadingFlag"></nouislider>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <br>
+                                    <br>
+                                    <br>
+
+                                    <tr>
+                                        <td>
+                                            <h4 class="settings-head">
+                                                <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="top" data-toggle="tooltip" [attr.data-original-title]="tooltips.keystroke_collect_period"></i>&nbsp;Set Keystroke Collect Period:</h4>
+                                        </td>
+                                        <td>
+                                            <div class="keystroke-collect-period-select">
+                                                <select [(ngModel)]="currentProject.keystroke_data_collect_every_n_seconds" (ngModelChange)="this.onProjectSettingsChangeFlag = true;"
+                                                    class="bg-default styled-select">
+                                                    <option>5</option>
+                                                    <option>7</option>
+                                                    <option>12</option>
+                                                    <option>15</option>
+                                                    <option>20</option>
+                                                    <option>30</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <br>
+                                    <br>
+                                    <br>
+
+                                    <tr>
+                                        <td>
+                                            <h4 class="settings-head">Delete
+                                                <strong>all</strong> keystroke data:</h4>
+                                        </td>
+                                        <td>
+                                            <button [disabled]="projectChangingFlag == true || (SubjectsSummary == undefined) || dashboardLoadingFlag" class="btn btn-danger"
+                                                (click)="deleteSubjects()">Delete Data</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <button *ngIf="onProjectSettingsChangeFlag" [disabled]="projectChangingFlag" class="btn btn-primary btn-xs" style="margin-top:19px;"
+                                    (click)="changeProjectSettings()">Save Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <br>
+    <hr>
+
+    <!-- 
+        Subjects Summary
+        Dependend On SubjectsSummary
+        SubjectsSummary is array of objects: 
+        {subject,_id,totalKeystrokes,firstKeystrokeDate,
+            lastKeystrokeDate,rejections,isTrained,totalUniqueDigraphs,top5digraphs : [{digraph,samples}]}
+    
+     -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Users Statistics</h4>
+        </div>
+        <div class="panel-body">
+            <div class="well" style="text-align:justify;font-style:italic;">Here you can view some of your user keystroke dynamics statistics.
+            </div>
+            <small style="font-weight: bold;">(All timings are in milliseconds. Digraph is the successive typing of two keystrokes)</small>
+            <br>
+            <br>
+            <!--Users table starts here  -->
+
+            <div *ngIf="!dashboardLoadingFlag && SubjectsSummary!== undefined" class="row">
+                <div class="col-lg-12">
+                    <table id="userStats" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Is Trained?</th>
+                                <th>Total Rejections</th>
+                                <th>Total Keystrokes</th>
+                                <th>First KeystrokeEvent Date</th>
+                                <th>Last KeystrokeEvent Date</th>
+                                <th>
+                                    <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="bottom" data-toggle="tooltip" [attr.data-original-title]="tooltips.totalDigraphs"></i>&nbsp;Total Digraphs
+                                </th>
+                                <th>Average Samples/Digraph</th>
+                                <th>
+                                    <i style="color:#C7C7C7;" class="fa fa-info-circle" title="" data-placement="bottom" data-toggle="tooltip" [attr.data-original-title]="tooltips.top3Digraphs"></i>&nbsp;Top 3 digraphs
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr class="my-tr" *ngFor="let summ of SubjectsSummary;let i = index" (mouseenter)="activateSubjectName($event,i)" (mouseleave)="deactivateSubjectName(i)">
+                                <td>
+                                    <span class="subject-name">{{summ.subject}}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a (click)="downloadSubjectsData(i)" style="font-weight:bold;">Download Raw Data</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a (click)="deleteSubjectData(i)" style="color:red;">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td *ngIf="summ.isTrained" class="al-center user-stat">
+                                    <img src="../assets/img/dashboard/yes.png" class="icon-user-stat">
+                                </td>
+                                <td *ngIf="!summ.isTrained" class="al-center user-stat">
+                                    <img src="../assets/img/dashboard/no.png" class="icon-user-stat">
+                                </td>
+                                <td class="al-center user-stat">{{summ.rejections}}</td>
+                                <td class="al-center user-stat">{{summ.totalKeystrokes}}</td>
+                                <td class="al-center user-stat" style="white-space:pre">{{this.showTimeBelowDate(this.formatMyDate(summ.firstKeystrokeDate))}}</td>
+                                <td class="al-center user-stat" style="white-space:pre">{{this.showTimeBelowDate(this.formatMyDate(summ.lastKeystrokeDate))}}</td>
+                                <td class="al-center user-stat">{{summ.totalUniqueDigraphs}}</td>
+                                <td class="al-center user-stat">{{summ.avgSamplesPerDigraph | number : '1.1-1'}}</td>
+                                <td class="al-center user-stat">
+                                    <span *ngFor="let di of summ.top5Digraphs.slice(0,3)">
+                                        <strong>"{{this.formatMyDigraphStr(di.digraph)}}"</strong>:&nbsp; {{di.samples}}
+                                        <br>
+                                    </span>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+    General Statistics
+    Dependend on ProjectSummary:
+    .totalKeystrokes
+    .totalUsers
+    .lastKeystrokeDate
+    .totalRejections
+    and currentProject.enable_keyguard_auth_flag
+ -->

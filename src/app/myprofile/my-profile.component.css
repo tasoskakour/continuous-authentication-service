@@ -1,0 +1,32 @@
+.profile-container {
+    margin-top: 100px;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    margin-left: 100px;
+}
+
+h2.name {
+    text-align: center;
+    text-decoration: underline;
+}
+
+h3.username {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+span.username {
+    font-weight: bold;
+}
+
+h1.my-projects {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.my-border-radius {
+    border-radius: 100px;
+}
