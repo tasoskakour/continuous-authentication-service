@@ -11,6 +11,7 @@ This is a service that provides web applications the ability to authenticate the
 - You copy the snippet created and inject it to your index.html of your website
 - You train your project in order for the system to create keystroke profiles for each user
 - From the dashboard you can set other preferences (like authentication threshold, limits, view stats etc)
+- Checkout [this](https://github.com/tasoskakour/continuous-authentication-website) repository to see this service in action
 
 ### Create a project 
 
