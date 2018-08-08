@@ -4,7 +4,21 @@
  [![license](https://badgen.net/badge/License/MIT/blue)](./LICENSE)
  
 ### Description
-This is a service that provides web applications the ability to authenticate their users not only with username-password by also with their behavior. Specifically, it uses keystroke patterns (keystroke dynamics) to authenticate users and in this way can detect anomalies to typing behaviora detecting possible impostors
+This is a service that provides web applications the ability to authenticate their users not only with username-password by also with their behavior. Specifically, it uses keystroke patterns (keystroke dynamics) to authenticate users and in this way can detect anomalies to typing behaviora detecting possible impostors. 
+
+#### Procedure of service
+- You create a project submitting your domain-name of your website
+- You copy the snippet created and inject it to your index.html of your website
+- You train your project in order for the system to create keystroke profiles for each user
+- From the dashboard you can set other preferences (like authentication threshold, limits, view stats etc)
+
+### Create a project 
+
+<img src="create-project.gif">
+
+### Train a project 
+
+<img src="train-project.gif">
  
 ### Technologies used
 - `MEAN Stack`: MongoDB, Express, Angular (4) and Nodejs used for web application. Specifically, MEN is used for handling back-end logic and the service and the Angular is used to provide a front-end dashboard for admin.
