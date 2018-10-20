@@ -1,0 +1,32 @@
+{
+  "name": "continuous-auth-service",
+  "description": "A service that provides web applications the ability to authenticate their users not only with username-password but also by their behavior.",
+  "repository": "https://github.com/tasoskakour/continuous-authentication-service.git",
+  "env": {
+    "KEYSTROKE_DYNAMICS_MLAB_HOST": {
+      "description": "Host url for mlab database.",
+      "required": true
+    },
+    "KEYSTROKE_DYNAMICS_MLAB_USER": {
+      "description": "Username of mlab.",
+      "required": true
+    },
+    "KEYSTROKE_DYNAMICS_MLAB_PASSWORD": {
+      "description": "Password of mlab.",
+      "required": true
+    },
+    "KEYSTROKE_DYNAMICS_TOKEN_SECRET": {
+      "description": "Secret for generating jwt tokens.",
+      "required": false,
+      "generator": "secret"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
